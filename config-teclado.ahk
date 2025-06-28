@@ -1,41 +1,39 @@
-; Variables de estado para niveles
+; ====== Variables de estado ======
 NavLayer := false
 Level2 := false
 Level3 := false
 
-; Toggle niveles con combinaciones específicas
-^+1::  ; Ctrl+Shift+1 toggle nivel 1
-    NavLayer := !NavLayer
+; ====== ACTIVAR niveles ======
+^+1::  ; Activar Nivel 1
+    NavLayer := true
     ; SoundBeep, 750, 150
-    if (NavLayer) {
-        ToolTip, Nivel 1 ACTIVADO
-        SetCapsLockState, On
-    } else {
-        ToolTip, Nivel 1 DESACTIVADO
-        SetCapsLockState, Off
-    }
+    SetCapsLockState, On
+    ToolTip, Nivel 1 (NAV) ACTIVADO
     SetTimer, ClearTip, -1000
 return
 
-^+2::  ; Ctrl+Shift+2 toggle nivel 2
-    Level2 := !Level2
+^+2::  ; Activar Nivel 2
+    Level2 := true
     ; SoundBeep, 1000, 150
-    if (Level2) {
-        ToolTip, Nivel 2 ACTIVADO
-    } else {
-        ToolTip, Nivel 2 DESACTIVADO
-    }
+    ToolTip, Nivel 2 ACTIVADO
     SetTimer, ClearTip, -1000
 return
 
-^+3::  ; Ctrl+Shift+3 toggle nivel 3
-    Level3 := !Level3
+^+3::  ; Activar Nivel 3
+    Level3 := true
     ; SoundBeep, 1250, 150
-    if (Level3) {
-        ToolTip, Nivel 3 ACTIVADO
-    } else {
-        ToolTip, Nivel 3 DESACTIVADO
-    }
+    ToolTip, Nivel 3 ACTIVADO
+    SetTimer, ClearTip, -1000
+return
+
+; ====== SALIDA GLOBAL con ESC ======
+Esc::
+    NavLayer := false
+    Level2 := false
+    Level3 := false
+    ; SoundBeep, 500, 100
+    SetCapsLockState, Off
+    ToolTip, Todos los niveles desactivados
     SetTimer, ClearTip, -1000
 return
 
@@ -43,19 +41,63 @@ ClearTip:
     ToolTip
 return
 
-; Comportamiento de teclas en función del nivel activo
+; ====== NIVEL 1: Navegación con IJKL y modificadores ======
 #If NavLayer
-    i::SendInput {Up}
-    j::SendInput {Left}
-    k::SendInput {Down}
-    l::SendInput {Right}
+*i::
+    if GetKeyState("Ctrl", "P") && GetKeyState("Shift", "P") {
+        SendInput ^+{Up}
+    } else if GetKeyState("Ctrl", "P") {
+        SendInput ^{Up}
+    } else if GetKeyState("Shift", "P") {
+        SendInput +{Up}
+    } else {
+        SendInput {Up}
+    }
+return
+
+*j::
+    if GetKeyState("Ctrl", "P") && GetKeyState("Shift", "P") {
+        SendInput ^+{Left}
+    } else if GetKeyState("Ctrl", "P") {
+        SendInput ^{Left}
+    } else if GetKeyState("Shift", "P") {
+        SendInput +{Left}
+    } else {
+        SendInput {Left}
+    }
+return
+
+*k::
+    if GetKeyState("Ctrl", "P") && GetKeyState("Shift", "P") {
+        SendInput ^+{Down}
+    } else if GetKeyState("Ctrl", "P") {
+        SendInput ^{Down}
+    } else if GetKeyState("Shift", "P") {
+        SendInput +{Down}
+    } else {
+        SendInput {Down}
+    }
+return
+
+*l::
+    if GetKeyState("Ctrl", "P") && GetKeyState("Shift", "P") {
+        SendInput ^+{Right}
+    } else if GetKeyState("Ctrl", "P") {
+        SendInput ^{Right}
+    } else if GetKeyState("Shift", "P") {
+        SendInput +{Right}
+    } else {
+        SendInput {Right}
+    }
+return
 #If
 
+; ====== NIVEL 2 y 3 (vacíos por ahora) ======
 #If Level2
-    ; Aquí podés definir otros remapeos para nivel 2
+    ; Acciones para Nivel 2
 #If
 
 #If Level3
-    ; Aquí podés definir otros remapeos para nivel 3
+    ; Acciones para Nivel 3
 #If
 
