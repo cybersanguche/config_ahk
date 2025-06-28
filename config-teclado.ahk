@@ -15,7 +15,7 @@ return
 
 !2::  ; Alt + 2 = Nivel 2
     Level2 := true
-    ToolTip, NUMpad
+    ToolTip, NUMpad (BLENDER)
     SetTimer, ClearTip, -1000
 return
 
@@ -31,8 +31,7 @@ return
 
 ; ====== NIVEL 1: Navegación con IJKL y modificadores ======
 #If NavLayer
-
-q::  ; Salida desde cualquier nivel
+Tab::  ; Salida desde cualquier nivel
     NavLayer := false
     Level2 := false
     Level3 := false
@@ -41,8 +40,13 @@ q::  ; Salida desde cualquier nivel
     SetTimer, ClearTip, -1000
 return
 ; CIERRA TOOD PROGRAMA DE MIERDA
-w::SendInput !{F4}  ; Cierra ventana activa (Alt+F4)
+q::SendInput !{F4}  ; Cierra ventana activa (Alt+F4)
 
+;ACCESO DIRECTO
+t::SendInput #{1}   ; Simula Win + 2 → Terminal (Windows Terminal)
+c::SendInput #{2}   ; Simula Win + 3 → ChatGPT app o navegador
+f::Run, "C:\Program Files\Mozilla Firefox\firefox.exe" ; Simula Win + 1 → Firefox
+b::Run, D:\blender\blender-launcher.exe ; Simula Win + 3 → blender
 *i::
     if GetKeyState("Ctrl", "P") && GetKeyState("Shift", "P") {
         SendInput ^+{Up}
@@ -95,7 +99,7 @@ return
 ; ====== NIVEL 2: NUMPAD EMULADO (ZURDO) ======
 #If Level2
 
-q::  ; Salida desde cualquier nivel
+Tab::  ; Salida desde cualquier nivel
     NavLayer := false
     Level2 := false
     Level3 := false
@@ -103,7 +107,10 @@ q::  ; Salida desde cualquier nivel
     ToolTip, Todos los niveles desactivados
     SetTimer, ClearTip, -1000
 return
-
+#IfWinActive ahk_exe blender.exe
+a::Send ^{NumpadAdd}
+z::Send ^{NumpadSub}
+#IfWinActive
 w::SendInput {Numpad7}      ; Vista superior
 e::SendInput {Numpad1}      ; Vista frontal
 r::SendInput {Numpad3}      ; Vista lateral derecha
@@ -118,7 +125,7 @@ v::SendInput {NumpadDot}    ; Centrar objeto
 ; ====== NIVEL 3: Vacío (con salida) ======
 #If Level3
 
-q::  ; Salida desde cualquier nivel
+Tab::  ; Salida desde cualquier nivel
     NavLayer := false
     Level2 := false
     Level3 := false
@@ -126,6 +133,5 @@ q::  ; Salida desde cualquier nivel
     ToolTip, Todos los niveles desactivados
     SetTimer, ClearTip, -1000
 return
-
 #If
 
