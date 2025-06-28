@@ -54,6 +54,7 @@ t::SendInput #{1}   ; Win + 1 → Firefox
 c::SendInput #{2}   ; Win + 2 → ChatGPT app
 f::Run, "C:\Program Files\Mozilla Firefox\firefox.exe"
 b::Run, D:\blender\blender-launcher.exe
+p::Run, D:\ ; ABRIR DISCO D 
 
 *i::
     if GetKeyState("Ctrl", "P") && GetKeyState("Shift", "P")
@@ -102,8 +103,9 @@ return
 
 ; ====== NIVEL 2: Numpad emulado para Blender ======
 #If (Level2 && WinActive("ahk_exe blender.exe"))
-a::Send ^{NumpadAdd}       ; Zoom In
-z::Send ^{NumpadSub}       ; Zoom Out
+;a::Send ^{WheelUp}     ; Zoom In
+;z::Send ^{WheelDown}   ; Zoom Out
+p::Send {F3}
 w::Send {Numpad7}          ; Vista superior
 e::Send {Numpad1}          ; Vista frontal
 r::Send {Numpad3}          ; Vista lateral derecha
