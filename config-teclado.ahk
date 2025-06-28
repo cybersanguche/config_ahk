@@ -40,6 +40,8 @@ q::  ; Salida desde cualquier nivel
     ToolTip, Todos los niveles desactivados
     SetTimer, ClearTip, -1000
 return
+; CIERRA TOOD PROGRAMA DE MIERDA
+w::SendInput !{F4}  ; Cierra ventana activa (Alt+F4)
 
 *i::
     if GetKeyState("Ctrl", "P") && GetKeyState("Shift", "P") {
