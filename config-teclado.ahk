@@ -27,14 +27,19 @@ return
 return
 
 ; ====== SALIDA GLOBAL con ESC ======
+; === si no esta en algun nivel solo funciona como exit
 Esc::
-    NavLayer := false
-    Level2 := false
-    Level3 := false
-    ; SoundBeep, 500, 100
-    SetCapsLockState, Off
-    ToolTip, Todos los niveles desactivados
-    SetTimer, ClearTip, -1000
+    if (NavLayer || Level2 || Level3) {
+        NavLayer := false
+        Level2 := false
+        Level3 := false
+        ; SoundBeep, 500, 100
+        SetCapsLockState, Off
+        ToolTip, Todos los niveles desactivados
+        SetTimer, ClearTip, -1000
+    } else {
+        SendInput {Esc}  ; Comportamiento normal de Escape
+    }
 return
 
 ClearTip:
@@ -93,9 +98,20 @@ return
 #If
 
 ; ====== NIVEL 2 y 3 (vacíos por ahora) ======
+
+; ====== NIVEL 2 numpad para blender ======
 #If Level2
-    ; Acciones para Nivel 2
+q::SendInput {Numpad7}
+w::SendInput {Numpad1}
+e::SendInput {Numpad3}
+a::SendInput ^{Numpad7}
+s::SendInput ^{Numpad1}
+d::SendInput ^{Numpad3}
+z::SendInput {Numpad5}
+x::SendInput {Numpad0}
+c::SendInput {NumpadDot}
 #If
+
 
 #If Level3
     ; Acciones para Nivel 3
