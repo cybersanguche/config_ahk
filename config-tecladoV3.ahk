@@ -11,7 +11,7 @@ Level3 := false
     Level2 := false
     Level3 := false
     SetCapsLockState, On
-    ToolTip, NAVEGACION ACTIVADA
+    ToolTip, NAVEGACIÓN ACTIVADA
     SetTimer, ClearTip, -1000
 return
 
@@ -35,17 +35,19 @@ ClearTip:
     ToolTip
 return
 
-; ====== SALIDA global con TAB (en cualquier nivel) ======
-#If (NavLayer || Level2 || Level3)
-Tab::
-    NavLayer := false
-    Level2 := false
-    Level3 := false
-    SetCapsLockState, Off
-    ToolTip, Todos los niveles DESACTIVADOS
-    SetTimer, ClearTip, -1000
+; ====== SALIDA global con SHIFT (izquierdo o derecho) ======
+~LShift::
+~RShift::
+    if (NavLayer || Level2 || Level3)
+    {
+        NavLayer := false
+        Level2 := false
+        Level3 := false
+        SetCapsLockState, Off
+        ToolTip, TODOS LOS NIVELES DESACTIVADOS
+        SetTimer, ClearTip, -1000
+    }
 return
-#If
 
 ; ====== NIVEL 1: Navegación general con IJKL ======
 #If NavLayer
@@ -103,8 +105,6 @@ return
 
 ; ====== NIVEL 2: Numpad emulado para Blender ======
 #If (Level2 && WinActive("ahk_exe blender.exe"))
-;a::Send ^{WheelUp}     ; Zoom In
-;z::Send ^{WheelDown}   ; Zoom Out
 p::Send {F3}
 w::Send {Numpad7}          ; Vista superior
 e::Send {Numpad1}          ; Vista frontal
@@ -119,6 +119,6 @@ v::Send {NumpadDot}        ; Centrar objeto
 
 ; ====== NIVEL 3: Personalizado, por ahora vacío ======
 #If Level3
-; Acá podés definir funciones especiales o experimentales
+; Aquí podés definir funciones especiales o experimentales
 #If
 
