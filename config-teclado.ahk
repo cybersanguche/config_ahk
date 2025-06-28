@@ -1,45 +1,28 @@
+#MaxHotkeysPerInterval 1000  ; Evita saturación de hotkeys
+
 ; ====== Variables de estado ======
 NavLayer := false
 Level2 := false
 Level3 := false
 
-; ====== ACTIVAR niveles ======
-^+1::  ; Activar Nivel 1
+; ====== ACTIVAR niveles con ALT ======
+!1::  ; Alt + 1 = Nivel 1
     NavLayer := true
-    ; SoundBeep, 750, 150
     SetCapsLockState, On
-    ToolTip, Nivel 1 (NAV) ACTIVADO
+    ToolTip, NAVEGACION
     SetTimer, ClearTip, -1000
 return
 
-^+2::  ; Activar Nivel 2
+!2::  ; Alt + 2 = Nivel 2
     Level2 := true
-    ; SoundBeep, 1000, 150
-    ToolTip, Nivel 2 ACTIVADO
+    ToolTip, NUMpad
     SetTimer, ClearTip, -1000
 return
 
-^+3::  ; Activar Nivel 3
+!3::  ; Alt + 3 = Nivel 3
     Level3 := true
-    ; SoundBeep, 1250, 150
     ToolTip, Nivel 3 ACTIVADO
     SetTimer, ClearTip, -1000
-return
-
-; ====== SALIDA GLOBAL con ESC ======
-; === si no esta en algun nivel solo funciona como exit
-Esc::
-    if (NavLayer || Level2 || Level3) {
-        NavLayer := false
-        Level2 := false
-        Level3 := false
-        ; SoundBeep, 500, 100
-        SetCapsLockState, Off
-        ToolTip, Todos los niveles desactivados
-        SetTimer, ClearTip, -1000
-    } else {
-        SendInput {Esc}  ; Comportamiento normal de Escape
-    }
 return
 
 ClearTip:
@@ -48,6 +31,16 @@ return
 
 ; ====== NIVEL 1: Navegación con IJKL y modificadores ======
 #If NavLayer
+
+q::  ; Salida desde cualquier nivel
+    NavLayer := false
+    Level2 := false
+    Level3 := false
+    SetCapsLockState, Off
+    ToolTip, Todos los niveles desactivados
+    SetTimer, ClearTip, -1000
+return
+
 *i::
     if GetKeyState("Ctrl", "P") && GetKeyState("Shift", "P") {
         SendInput ^+{Up}
@@ -97,23 +90,40 @@ return
 return
 #If
 
-; ====== NIVEL 2 y 3 (vacíos por ahora) ======
-
-; ====== NIVEL 2 numpad para blender ======
+; ====== NIVEL 2: NUMPAD EMULADO (ZURDO) ======
 #If Level2
-q::SendInput {Numpad7}
-w::SendInput {Numpad1}
-e::SendInput {Numpad3}
-a::SendInput ^{Numpad7}
-s::SendInput ^{Numpad1}
-d::SendInput ^{Numpad3}
-z::SendInput {Numpad5}
-x::SendInput {Numpad0}
-c::SendInput {NumpadDot}
+
+q::  ; Salida desde cualquier nivel
+    NavLayer := false
+    Level2 := false
+    Level3 := false
+    SetCapsLockState, Off
+    ToolTip, Todos los niveles desactivados
+    SetTimer, ClearTip, -1000
+return
+
+w::SendInput {Numpad7}      ; Vista superior
+e::SendInput {Numpad1}      ; Vista frontal
+r::SendInput {Numpad3}      ; Vista lateral derecha
+s::SendInput ^{Numpad7}     ; Vista inferior
+d::SendInput ^{Numpad1}     ; Vista trasera
+f::SendInput ^{Numpad3}     ; Vista lateral izquierda
+x::SendInput {Numpad5}      ; Perspectiva / Orto
+c::SendInput {Numpad0}      ; Cámara
+v::SendInput {NumpadDot}    ; Centrar objeto
 #If
 
-
+; ====== NIVEL 3: Vacío (con salida) ======
 #If Level3
-    ; Acciones para Nivel 3
+
+q::  ; Salida desde cualquier nivel
+    NavLayer := false
+    Level2 := false
+    Level3 := false
+    SetCapsLockState, Off
+    ToolTip, Todos los niveles desactivados
+    SetTimer, ClearTip, -1000
+return
+
 #If
 
