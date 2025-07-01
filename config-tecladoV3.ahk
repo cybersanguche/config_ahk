@@ -57,7 +57,7 @@ c::SendInput #{2}   ; Win + 2 → ChatGPT app
 f::Run, "C:\Program Files\Mozilla Firefox\firefox.exe"
 b::Run, D:\blender\blender-launcher.exe
 d::Run, D:\ ; ABRIR DISCO D 
-
+o::Run, D:\PROGRAMAS\obsidian\Obsidian.exe  ; ABRIR OBSSIDIAN 
 *i::
     if GetKeyState("Ctrl", "P") && GetKeyState("Shift", "P")
         SendInput ^+{Up}
